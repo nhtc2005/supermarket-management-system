@@ -1,0 +1,56 @@
+# Git
+.git
+.gitignore
+
+# IDE
+.idea
+.vscode
+*.iml
+*.swp
+*.swo
+
+# Maven
+target
+.mvn/wrapper/maven-wrapper.jar
+
+# Logs
+*.log
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Env files
+.env
+.env.*
+
+# Temporary files
+tmp/
+temp/
+
+# Docker
+docker-compose.yml
+Dockerfile
+
+# Test reports
+surefire-reports/
+failsafe-reports/
+
+# Generated files
+*.class
+*.jar
+*.war
+*.ear
+
+# Node
+node_modules/
+dist/
+
+# Coverage
+coverage/
+jacoco.exec
+/site/
+
+uploads/
+data/

@@ -1,0 +1,2536 @@
+openapi: 3.1.0
+info:
+  title: Supermarket Management API
+  description: API documentation for Supermarket Management System
+  contact:
+    name: Viet Cuong
+    email: cuong.trinhvietk22@hcmut.edu.vn
+  version: 1.0
+servers:
+  - url: http://localhost:8080/api/v1
+    description: Local Development Server
+security:
+  - bearerAuth: []
+tags:
+  - name: Customer
+    description: Customer management APIs
+  - name: Order
+    description: Order management APIs
+  - name: Employee
+    description: Employee management APIs
+  - name: Warehouse
+    description: Warehouse management APIs
+  - name: Store
+    description: Store management APIs
+  - name: Product Variant
+    description: Product variant management APIs
+  - name: Product
+    description: Product management APIs
+  - name: Auth
+    description: Authentication APIs for customers and employees
+  - name: Batch
+    description: Batch management APIs
+paths:
+  /warehouses/{id}:
+    get:
+      tags:
+        - Warehouse
+      summary: Get warehouse by ID
+      operationId: getWarehouseById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseWarehouseResponse'
+      security:
+        - bearerAuth: []
+    put:
+      tags:
+        - Warehouse
+      summary: Update warehouse
+      operationId: updateWarehouse
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WarehouseRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseWarehouseResponse'
+      security:
+        - bearerAuth: []
+    delete:
+      tags:
+        - Warehouse
+      summary: Delete warehouse
+      operationId: deleteWarehouse
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseVoid'
+      security:
+        - bearerAuth: []
+  /stores/{id}:
+    get:
+      tags:
+        - Store
+      summary: Get store by ID
+      operationId: getStoreById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseStoreResponse'
+      security:
+        - bearerAuth: []
+    put:
+      tags:
+        - Store
+      summary: Update store
+      operationId: updateStore
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StoreRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseStoreResponse'
+      security:
+        - bearerAuth: []
+    delete:
+      tags:
+        - Store
+      summary: Delete store
+      operationId: deleteStore
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseVoid'
+      security:
+        - bearerAuth: []
+  /products/{productId}/variants/{variantId}:
+    get:
+      tags:
+        - Product Variant
+      summary: Get variant by ID
+      operationId: getVariantById
+      parameters:
+        - name: variantId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseProductVariantDetailResponse'
+      security:
+        - bearerAuth: []
+    put:
+      tags:
+        - Product Variant
+      summary: Update variant
+      operationId: updateVariant
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: variantId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductVariantRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseProductVariantDetailResponse'
+      security:
+        - bearerAuth: []
+    delete:
+      tags:
+        - Product Variant
+      summary: Delete variant
+      operationId: deleteVariant
+      parameters:
+        - name: variantId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseVoid'
+      security:
+        - bearerAuth: []
+  /products/{id}:
+    get:
+      tags:
+        - Product
+      summary: Get product by ID
+      description: All users can view product details
+      operationId: getProductById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseProductDetailResponse'
+      security:
+        - bearerAuth: []
+    put:
+      tags:
+        - Product
+      summary: Update product
+      description: Manager can update product information
+      operationId: updateProduct
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductUpdateRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseProductResponse'
+      security:
+        - bearerAuth: []
+    delete:
+      tags:
+        - Product
+      summary: Delete product
+      description: Manager can delete product
+      operationId: deleteProduct
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseVoid'
+      security:
+        - bearerAuth: []
+  /orders/{id}/status:
+    put:
+      tags:
+        - Order
+      summary: Update order status
+      description: Sales/Manager can update order status
+      operationId: updateOrderStatus
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderUpdateStatusRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseOrderResponse'
+      security:
+        - bearerAuth: []
+  /customers/{id}:
+    get:
+      tags:
+        - Customer
+      summary: Get customer by ID
+      description: Manager/Sales can view customer details
+      operationId: getCustomerById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseCustomerDetailResponse'
+      security:
+        - bearerAuth: []
+    put:
+      tags:
+        - Customer
+      summary: Update customer
+      description: Manager/Sales can update customer information
+      operationId: updateCustomer
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerUpdateRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseCustomerResponse'
+      security:
+        - bearerAuth: []
+    delete:
+      tags:
+        - Customer
+      summary: Delete customer
+      description: Manager can delete customer account
+      operationId: deleteCustomer
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseVoid'
+      security:
+        - bearerAuth: []
+  /customers/me:
+    get:
+      tags:
+        - Customer
+      summary: Get my profile
+      description: Customer can view their own profile
+      operationId: getMyProfile
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseCustomerDetailResponse'
+      security:
+        - bearerAuth: []
+    put:
+      tags:
+        - Customer
+      summary: Update my profile
+      description: Customer can update their own profile
+      operationId: updateMyProfile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerUpdateRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseCustomerResponse'
+      security:
+        - bearerAuth: []
+    delete:
+      tags:
+        - Customer
+      summary: Delete my account
+      description: Customer can delete their own account
+      operationId: deleteMyAccount
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseVoid'
+      security:
+        - bearerAuth: []
+  /auth/change-password:
+    put:
+      tags:
+        - Auth
+      summary: Change password
+      description: Change password for the currently authenticated user
+      operationId: changePassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseVoid'
+      security:
+        - bearerAuth: []
+  /warehouses:
+    get:
+      tags:
+        - Warehouse
+      summary: Get all warehouses
+      operationId: getAllWarehouses
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponsePageResponseWarehouseResponse'
+      security:
+        - bearerAuth: []
+    post:
+      tags:
+        - Warehouse
+      summary: Create warehouse
+      operationId: createWarehouse
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WarehouseRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseWarehouseResponse'
+      security:
+        - bearerAuth: []
+  /stores:
+    get:
+      tags:
+        - Store
+      summary: Get all stores
+      operationId: getAllStores
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponsePageResponseStoreResponse'
+      security:
+        - bearerAuth: []
+    post:
+      tags:
+        - Store
+      summary: Create store
+      operationId: createStore
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StoreRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseStoreResponse'
+      security:
+        - bearerAuth: []
+  /products:
+    get:
+      tags:
+        - Product
+      summary: Search products
+      description: All users can search products
+      operationId: searchProducts
+      parameters:
+        - name: name
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: sku
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: barcode
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: minPrice
+          in: query
+          required: false
+          schema:
+            type: number
+        - name: maxPrice
+          in: query
+          required: false
+          schema:
+            type: number
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+        - name: sortBy
+          in: query
+          required: false
+          schema:
+            type: string
+            default: id
+        - name: sortDirection
+          in: query
+          required: false
+          schema:
+            type: string
+            default: ASC
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponsePageResponseProductResponse'
+      security:
+        - bearerAuth: []
+    post:
+      tags:
+        - Product
+      summary: Create product
+      description: Manager can create new product
+      operationId: createProduct
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductCreateRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseProductResponse'
+      security:
+        - bearerAuth: []
+  /products/{productId}/variants:
+    get:
+      tags:
+        - Product Variant
+      summary: Get all variants of a product
+      operationId: getVariantsByProduct
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseListProductVariantDetailResponse'
+      security:
+        - bearerAuth: []
+    post:
+      tags:
+        - Product Variant
+      summary: Create product variant
+      operationId: createVariant
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductVariantRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseProductVariantDetailResponse'
+      security:
+        - bearerAuth: []
+  /orders:
+    get:
+      tags:
+        - Order
+      summary: Search orders
+      description: Staff can search and filter orders
+      operationId: searchOrders
+      parameters:
+        - name: customerId
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: fromDate
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: toDate
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+        - name: sortBy
+          in: query
+          required: false
+          schema:
+            type: string
+            default: createdAt
+        - name: sortDirection
+          in: query
+          required: false
+          schema:
+            type: string
+            default: DESC
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponsePageResponseOrderResponse'
+      security:
+        - bearerAuth: []
+    post:
+      tags:
+        - Order
+      summary: Create order
+      description: Customer or Sales can create new order
+      operationId: createOrder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderCreateRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseOrderDetailResponse'
+      security:
+        - bearerAuth: []
+  /orders/{id}/cancel:
+    post:
+      tags:
+        - Order
+      summary: Cancel order
+      description: Cancel a pending order
+      operationId: cancelOrder
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseVoid'
+      security:
+        - bearerAuth: []
+  /employees:
+    get:
+      tags:
+        - Employee
+      summary: Get all employees
+      operationId: getAllEmployees
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponsePageResponseEmployeeResponse'
+      security:
+        - bearerAuth: []
+    post:
+      tags:
+        - Employee
+      summary: Create employee
+      operationId: createEmployee
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseEmployeeResponse'
+      security:
+        - bearerAuth: []
+  /employees/warehouse:
+    post:
+      tags:
+        - Employee
+      summary: Create warehouse employee
+      operationId: createWarehouseEmployee
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WarehouseEmployeeRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseEmployeeResponse'
+      security:
+        - bearerAuth: []
+  /employees/sales:
+    post:
+      tags:
+        - Employee
+      summary: Create sales employee
+      operationId: createSalesEmployee
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SalesEmployeeRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseEmployeeResponse'
+      security:
+        - bearerAuth: []
+  /customers/{id}/loyalty-points/redeem:
+    post:
+      tags:
+        - Customer
+      summary: Redeem loyalty points
+      description: Manager/Sales can redeem loyalty points for customer
+      operationId: redeemLoyaltyPoints
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: points
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseCustomerResponse'
+      security:
+        - bearerAuth: []
+  /customers/{id}/loyalty-points/add:
+    post:
+      tags:
+        - Customer
+      summary: Add loyalty points
+      description: Manager/Sales can add loyalty points to customer
+      operationId: addLoyaltyPoints
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: points
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseCustomerResponse'
+      security:
+        - bearerAuth: []
+  /batches:
+    get:
+      tags:
+        - Batch
+      summary: Get all batches
+      operationId: getAllBatches
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponsePageResponseBatchResponse'
+      security:
+        - bearerAuth: []
+    post:
+      tags:
+        - Batch
+      summary: Create batch
+      operationId: createBatch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseBatchResponse'
+      security:
+        - bearerAuth: []
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Register new customer account
+      description: Create a new customer account with email and password
+      operationId: registerCustomer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerRegisterRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseAuthResponse'
+  /auth/refresh:
+    post:
+      tags:
+        - Auth
+      summary: Refresh access token
+      description: Get a new access token using refresh token
+      operationId: refreshToken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshTokenRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseAuthResponse'
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login to system
+      description: Login with email (for customers) or username (for employees)
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseAuthResponse'
+  /products/{id}/stores:
+    get:
+      tags:
+        - Product
+      summary: Get product stock in stores
+      description: View product stock across all stores
+      operationId: getProductStockInStores
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseListStoreStockResponse'
+      security:
+        - bearerAuth: []
+  /products/low-stock:
+    get:
+      tags:
+        - Product
+      summary: Get low stock products
+      description: View products with stock below threshold
+      operationId: getLowStockProducts
+      parameters:
+        - name: threshold
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponsePageResponseProductResponse'
+      security:
+        - bearerAuth: []
+  /orders/{id}:
+    get:
+      tags:
+        - Order
+      summary: Get order by ID
+      description: View order details
+      operationId: getOrderById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseOrderDetailResponse'
+      security:
+        - bearerAuth: []
+    delete:
+      tags:
+        - Order
+      summary: Delete order
+      description: Manager can delete order
+      operationId: deleteOrder
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseVoid'
+      security:
+        - bearerAuth: []
+  /orders/statistics:
+    get:
+      tags:
+        - Order
+      summary: Get order statistics
+      description: Manager can view order statistics
+      operationId: getOrderStatistics
+      parameters:
+        - name: fromDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: toDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseObject'
+      security:
+        - bearerAuth: []
+  /orders/my-orders:
+    get:
+      tags:
+        - Order
+      summary: Get my orders
+      description: Customer can view their own orders
+      operationId: getMyOrders
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponsePageResponseOrderResponse'
+      security:
+        - bearerAuth: []
+  /customers:
+    get:
+      tags:
+        - Customer
+      summary: Search customers
+      description: Manager/Sales can search and list customers
+      operationId: searchCustomers
+      parameters:
+        - name: keyword
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: email
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: phone
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+        - name: sortBy
+          in: query
+          required: false
+          schema:
+            type: string
+            default: id
+        - name: sortDirection
+          in: query
+          required: false
+          schema:
+            type: string
+            default: ASC
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponsePageResponseCustomerResponse'
+      security:
+        - bearerAuth: []
+  /customers/top:
+    get:
+      tags:
+        - Customer
+      summary: Get top customers
+      description: Manager can view top customers by spending
+      operationId: getTopCustomers
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponsePageResponseCustomerDetailResponse'
+      security:
+        - bearerAuth: []
+  /batches/{id}:
+    get:
+      tags:
+        - Batch
+      summary: Get batch by ID
+      operationId: getBatchById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseBatchResponse'
+      security:
+        - bearerAuth: []
+    delete:
+      tags:
+        - Batch
+      summary: Delete batch
+      operationId: deleteBatch
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseVoid'
+      security:
+        - bearerAuth: []
+  /batches/expired:
+    get:
+      tags:
+        - Batch
+      summary: Get expired batches
+      operationId: getExpiredBatches
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponsePageResponseBatchResponse'
+      security:
+        - bearerAuth: []
+  /auth/me:
+    get:
+      tags:
+        - Auth
+      summary: Get current user information
+      description: Get profile information of the currently authenticated user
+      operationId: getCurrentUser
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseObject'
+      security:
+        - bearerAuth: []
+  /employees/{id}:
+    delete:
+      tags:
+        - Employee
+      summary: Delete employee
+      operationId: deleteEmployee
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseVoid'
+      security:
+        - bearerAuth: []
+components:
+  schemas:
+    WarehouseRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 255
+          minLength: 0
+        location:
+          type: string
+        managerId:
+          type: integer
+          format: int64
+      required:
+        - name
+    ApiResponseWarehouseResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/WarehouseResponse'
+        timestamp:
+          type: string
+          format: date-time
+    WarehouseResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        location:
+          type: string
+        manager_id:
+          type: integer
+          format: int64
+        manager_name:
+          type: string
+        total_batches:
+          type: integer
+          format: int32
+    StoreRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 255
+          minLength: 0
+        location:
+          type: string
+        managerId:
+          type: integer
+          format: int64
+      required:
+        - name
+    ApiResponseStoreResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/StoreResponse'
+        timestamp:
+          type: string
+          format: date-time
+    StoreResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        location:
+          type: string
+        manager_id:
+          type: integer
+          format: int64
+        manager_name:
+          type: string
+        total_products:
+          type: integer
+          format: int32
+    ProductVariantRequest:
+      type: object
+      properties:
+        productId:
+          type: integer
+          format: int64
+        variantAttributes:
+          type: object
+          additionalProperties: {}
+      required:
+        - productId
+    ApiResponseProductVariantDetailResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/ProductVariantDetailResponse'
+        timestamp:
+          type: string
+          format: date-time
+    ProductVariantDetailResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        product_id:
+          type: integer
+          format: int64
+        product_name:
+          type: string
+        variant_attributes:
+          type: object
+          additionalProperties: {}
+    ProductUpdateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 255
+          minLength: 0
+        description:
+          type: string
+          maxLength: 1000
+          minLength: 0
+        price:
+          type: number
+          minimum: 0
+        sku:
+          type: string
+          maxLength: 100
+          minLength: 0
+        barcode:
+          type: string
+          maxLength: 255
+          minLength: 0
+    ApiResponseProductResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/ProductResponse'
+        timestamp:
+          type: string
+          format: date-time
+    ProductResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        barcode:
+          type: string
+        sku:
+          type: string
+        total_variants:
+          type: integer
+          format: int32
+        available_quantity:
+          type: integer
+          format: int32
+    OrderUpdateStatusRequest:
+      type: object
+      properties:
+        status:
+          type: string
+          minLength: 1
+      required:
+        - status
+    ApiResponseOrderResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/OrderResponse'
+        timestamp:
+          type: string
+          format: date-time
+    OrderResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        status:
+          type: string
+        customer_id:
+          type: integer
+          format: int64
+        customer_name:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        total_money:
+          type: number
+        total_items:
+          type: integer
+          format: int32
+        points_earned:
+          type: integer
+          format: int32
+    CustomerUpdateRequest:
+      type: object
+      properties:
+        firstName:
+          type: string
+          maxLength: 100
+          minLength: 0
+        lastName:
+          type: string
+          maxLength: 100
+          minLength: 0
+        email:
+          type: string
+        phone:
+          type: string
+        address:
+          type: string
+    ApiResponseCustomerResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/CustomerResponse'
+        timestamp:
+          type: string
+          format: date-time
+    CustomerResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        email:
+          type: string
+        phone:
+          type: string
+        address:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        loyalty_points:
+          type: integer
+          format: int32
+    ChangePasswordRequest:
+      type: object
+      properties:
+        currentPassword:
+          type: string
+          minLength: 1
+        newPassword:
+          type: string
+          maxLength: 2147483647
+          minLength: 6
+      required:
+        - currentPassword
+        - newPassword
+    ApiResponseVoid:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data: {}
+        timestamp:
+          type: string
+          format: date-time
+    ProductCreateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 255
+          minLength: 0
+        description:
+          type: string
+          maxLength: 1000
+          minLength: 0
+        price:
+          type: number
+          minimum: 0
+        sku:
+          type: string
+          maxLength: 100
+          minLength: 0
+        barcode:
+          type: string
+          maxLength: 255
+          minLength: 0
+      required:
+        - name
+        - price
+    OrderCreateRequest:
+      type: object
+      properties:
+        customerId:
+          type: integer
+          format: int64
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItemRequest'
+          minItems: 1
+        usePoints:
+          type: boolean
+      required:
+        - customerId
+        - items
+    OrderItemRequest:
+      type: object
+      properties:
+        productId:
+          type: integer
+          format: int64
+        quantity:
+          type: integer
+          format: int32
+          minimum: 1
+      required:
+        - productId
+        - quantity
+    ApiResponseOrderDetailResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/OrderDetailResponse'
+        timestamp:
+          type: string
+          format: date-time
+    OrderDetailResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        status:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItemResponse'
+        customer_id:
+          type: integer
+          format: int64
+        customer_name:
+          type: string
+        customer_email:
+          type: string
+        customer_phone:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        total_money:
+          type: number
+        points_earned:
+          type: integer
+          format: int32
+        points_used:
+          type: integer
+          format: int32
+    OrderItemResponse:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          format: int32
+        product_id:
+          type: integer
+          format: int64
+        product_name:
+          type: string
+        product_sku:
+          type: string
+        unit_price:
+          type: number
+        sub_total:
+          type: number
+    EmployeeRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          maxLength: 50
+          minLength: 3
+        password:
+          type: string
+          maxLength: 2147483647
+          minLength: 6
+        firstName:
+          type: string
+          maxLength: 100
+          minLength: 0
+        lastName:
+          type: string
+          maxLength: 100
+          minLength: 0
+        managerId:
+          type: integer
+          format: int64
+      required:
+        - password
+        - username
+    ApiResponseEmployeeResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/EmployeeResponse'
+        timestamp:
+          type: string
+          format: date-time
+    EmployeeResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        username:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        hired_at:
+          type: string
+          format: date-time
+        employee_type:
+          type: string
+        store_id:
+          type: integer
+          format: int64
+        warehouse_id:
+          type: integer
+          format: int64
+    WarehouseEmployeeRequest:
+      type: object
+      properties:
+        employee:
+          $ref: '#/components/schemas/EmployeeRequest'
+        warehouseId:
+          type: integer
+          format: int64
+      required:
+        - employee
+    SalesEmployeeRequest:
+      type: object
+      properties:
+        employee:
+          $ref: '#/components/schemas/EmployeeRequest'
+        storeId:
+          type: integer
+          format: int64
+      required:
+        - employee
+    BatchRequest:
+      type: object
+      properties:
+        variantId:
+          type: integer
+          format: int64
+        productId:
+          type: integer
+          format: int64
+        warehouseId:
+          type: integer
+          format: int64
+        manufacture:
+          type: string
+        supplier:
+          type: string
+        quantityTotal:
+          type: integer
+          format: int32
+          minimum: 1
+        createDate:
+          type: string
+          format: date
+        expiryDate:
+          type: string
+          format: date
+      required:
+        - productId
+        - quantityTotal
+        - variantId
+        - warehouseId
+    ApiResponseBatchResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/BatchResponse'
+        timestamp:
+          type: string
+          format: date-time
+    BatchResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        manufacture:
+          type: string
+        supplier:
+          type: string
+        product_id:
+          type: integer
+          format: int64
+        product_name:
+          type: string
+        warehouse_id:
+          type: integer
+          format: int64
+        warehouse_name:
+          type: string
+        quantity_total:
+          type: integer
+          format: int32
+        quantity_available:
+          type: integer
+          format: int32
+        create_date:
+          type: string
+          format: date
+        expiry_date:
+          type: string
+          format: date
+        is_expired:
+          type: boolean
+    CustomerRegisterRequest:
+      type: object
+      properties:
+        firstName:
+          type: string
+          maxLength: 100
+          minLength: 0
+        lastName:
+          type: string
+          maxLength: 100
+          minLength: 0
+        email:
+          type: string
+          minLength: 1
+        phone:
+          type: string
+        address:
+          type: string
+        password:
+          type: string
+          maxLength: 2147483647
+          minLength: 6
+      required:
+        - email
+        - firstName
+        - lastName
+        - password
+    ApiResponseAuthResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/AuthResponse'
+        timestamp:
+          type: string
+          format: date-time
+    AuthResponse:
+      type: object
+      properties:
+        user: {}
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+        userType:
+          type: string
+    RefreshTokenRequest:
+      type: object
+      properties:
+        refreshToken:
+          type: string
+          minLength: 1
+      required:
+        - refreshToken
+    LoginRequest:
+      type: object
+      properties:
+        identifier:
+          type: string
+          minLength: 1
+        password:
+          type: string
+          minLength: 1
+      required:
+        - identifier
+        - password
+    ApiResponsePageResponseWarehouseResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/PageResponseWarehouseResponse'
+        timestamp:
+          type: string
+          format: date-time
+    PageResponseWarehouseResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/WarehouseResponse'
+        page_number:
+          type: integer
+          format: int32
+        page_size:
+          type: integer
+          format: int32
+        total_elements:
+          type: integer
+          format: int64
+        total_pages:
+          type: integer
+          format: int32
+        is_last:
+          type: boolean
+    ApiResponsePageResponseStoreResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/PageResponseStoreResponse'
+        timestamp:
+          type: string
+          format: date-time
+    PageResponseStoreResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/StoreResponse'
+        page_number:
+          type: integer
+          format: int32
+        page_size:
+          type: integer
+          format: int32
+        total_elements:
+          type: integer
+          format: int64
+        total_pages:
+          type: integer
+          format: int32
+        is_last:
+          type: boolean
+    ApiResponsePageResponseProductResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/PageResponseProductResponse'
+        timestamp:
+          type: string
+          format: date-time
+    PageResponseProductResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductResponse'
+        page_number:
+          type: integer
+          format: int32
+        page_size:
+          type: integer
+          format: int32
+        total_elements:
+          type: integer
+          format: int64
+        total_pages:
+          type: integer
+          format: int32
+        is_last:
+          type: boolean
+    ApiResponseListProductVariantDetailResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVariantDetailResponse'
+        timestamp:
+          type: string
+          format: date-time
+    ApiResponseProductDetailResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/ProductDetailResponse'
+        timestamp:
+          type: string
+          format: date-time
+    ProductDetailResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        barcode:
+          type: string
+        variants:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVariantResponse'
+        sku:
+          type: string
+        total_variants:
+          type: integer
+          format: int32
+        available_quantity:
+          type: integer
+          format: int32
+        store_stocks:
+          type: array
+          items:
+            $ref: '#/components/schemas/StoreStockResponse'
+    ProductVariantResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        product_id:
+          type: integer
+          format: int64
+        variant_attributes:
+          type: object
+          additionalProperties: {}
+        total_stock:
+          type: integer
+          format: int32
+    StoreStockResponse:
+      type: object
+      properties:
+        store_id:
+          type: integer
+          format: int64
+        product_id:
+          type: integer
+          format: int64
+        quantity_in_stock:
+          type: integer
+          format: int32
+    ApiResponseListStoreStockResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/StoreStockResponse'
+        timestamp:
+          type: string
+          format: date-time
+    ApiResponsePageResponseOrderResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/PageResponseOrderResponse'
+        timestamp:
+          type: string
+          format: date-time
+    PageResponseOrderResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderResponse'
+        page_number:
+          type: integer
+          format: int32
+        page_size:
+          type: integer
+          format: int32
+        total_elements:
+          type: integer
+          format: int64
+        total_pages:
+          type: integer
+          format: int32
+        is_last:
+          type: boolean
+    ApiResponseObject:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data: {}
+        timestamp:
+          type: string
+          format: date-time
+    ApiResponsePageResponseEmployeeResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/PageResponseEmployeeResponse'
+        timestamp:
+          type: string
+          format: date-time
+    PageResponseEmployeeResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmployeeResponse'
+        page_number:
+          type: integer
+          format: int32
+        page_size:
+          type: integer
+          format: int32
+        total_elements:
+          type: integer
+          format: int64
+        total_pages:
+          type: integer
+          format: int32
+        is_last:
+          type: boolean
+    ApiResponsePageResponseCustomerResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/PageResponseCustomerResponse'
+        timestamp:
+          type: string
+          format: date-time
+    PageResponseCustomerResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerResponse'
+        page_number:
+          type: integer
+          format: int32
+        page_size:
+          type: integer
+          format: int32
+        total_elements:
+          type: integer
+          format: int64
+        total_pages:
+          type: integer
+          format: int32
+        is_last:
+          type: boolean
+    ApiResponseCustomerDetailResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/CustomerDetailResponse'
+        timestamp:
+          type: string
+          format: date-time
+    CustomerDetailResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        email:
+          type: string
+        phone:
+          type: string
+        address:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        loyalty_points:
+          type: integer
+          format: int32
+        total_orders:
+          type: integer
+          format: int64
+        total_spent:
+          type: number
+          format: double
+        created_at:
+          type: string
+          format: date-time
+    ApiResponsePageResponseCustomerDetailResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/PageResponseCustomerDetailResponse'
+        timestamp:
+          type: string
+          format: date-time
+    PageResponseCustomerDetailResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerDetailResponse'
+        page_number:
+          type: integer
+          format: int32
+        page_size:
+          type: integer
+          format: int32
+        total_elements:
+          type: integer
+          format: int64
+        total_pages:
+          type: integer
+          format: int32
+        is_last:
+          type: boolean
+    ApiResponsePageResponseBatchResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/PageResponseBatchResponse'
+        timestamp:
+          type: string
+          format: date-time
+    PageResponseBatchResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/BatchResponse'
+        page_number:
+          type: integer
+          format: int32
+        page_size:
+          type: integer
+          format: int32
+        total_elements:
+          type: integer
+          format: int64
+        total_pages:
+          type: integer
+          format: int32
+        is_last:
+          type: boolean
+securitySchemes:
+  bearerAuth:
+    type: http
+    name: bearerAuth
+    scheme: bearer
+    bearerFormat: JWT

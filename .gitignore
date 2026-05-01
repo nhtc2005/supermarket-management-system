@@ -1,0 +1,81 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependencies
+node_modules/
+
+# Build outputs (Frontend)
+dist/
+dist-ssr/
+coverage/
+*.local
+
+# Build outputs (Backend - Java/Spring)
+target/
+build/
+
+!**/src/main/**/target/
+!**/src/test/**/target/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# Environment variables
+.env
+.env.*
+.env.local
+.env.*.local
+.env.test.local
+.env.production.local
+
+# OS files
+.DS_Store
+
+# Cypress
+/cypress/videos/
+/cypress/screenshots/
+
+# IDE - VS Code
+.vscode/
+!.vscode/extensions.json
+
+# IntelliJ IDEA
+.idea
+*.iws
+*.iml
+*.ipr
+
+# Eclipse / STS
+.classpath
+.project
+.settings
+.springBeans
+.sts4-cache
+.apt_generated
+.factorypath
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# Maven wrapper
+.mvn/wrapper/maven-wrapper.jar
+
+# TypeScript
+*.tsbuildinfo
+
+# Misc
+HELP.md
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
