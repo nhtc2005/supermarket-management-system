@@ -179,6 +179,7 @@ This project is for educational and demonstration purposes.
 - Admin UI template inspired by: [Admin One](https://github.com/justboil/admin-one-vue-tailwind)
 - Spring Boot community
 - Vue.js ecosystem
+- MySQL community
 - Docker for containerization
 
 Special thanks to all contributors and open-source libraries that made this project possible.
