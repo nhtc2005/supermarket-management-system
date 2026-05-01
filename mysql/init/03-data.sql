@@ -23,8 +23,8 @@ UPDATE warehouse_employees SET warehouse_id = 1 WHERE employee_id = 3;
 
 INSERT INTO customers (first_name, last_name, email, phone, address, loyalty_points, password)
 VALUES 
-('Nguyen', 'An', 'an@gmail.com', '0900000001', 'Da Lat', 10, 'pass'),
-('Tran', 'Binh', 'binh@gmail.com', '0900000002', 'HCM', 5, 'pass');
+('Nguyen', 'An', 'an@gmail.com', '0900000001', 'Da Lat', 10, '$2a$10$Xyi2NvY76JWSU7ZV1RbIoev1hgJTfV62GZ548qrx/7mw32wdaNT5e'),
+('Tran', 'Binh', 'binh@gmail.com', '0900000002', 'HCM', 5, '$2a$10$Xyi2NvY76JWSU7ZV1RbIoev1hgJTfV62GZ548qrx/7mw32wdaNT5e');
 
 INSERT INTO products (name, description, price, SKU, barcode)
 VALUES 
